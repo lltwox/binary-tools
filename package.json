@@ -1,0 +1,13 @@
+{
+  "name": "binary-tools",
+  "description": "Wrapper around native Buffer type for ease-of-use",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexander Golubev <lltwox@gmail.com>",
+  "license": "ISC",
+  "repository": "git@github.com:lltwox/binary-tools.git",
+  "dependencies": {
+    "big-integer": "^1.6.48",
+    "int64-buffer": "^0.99.1007"
+  }
+}
