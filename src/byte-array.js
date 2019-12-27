@@ -1,6 +1,3 @@
-let int64buffer = require('int64-buffer'),
-    bigInteger = require('big-integer');
-
 /**
  * Wrapper for buffer reading
  *
@@ -11,9 +8,10 @@ class ByteArray {
   /**
    * @param {Buffer} buf
    */
-  constructor(buf) {
+  constructor(buf, endian = 'LE') {
     this.offset = 0;
     this.buf = buf;
+    this.endian = endian;
   }
 
   /**
@@ -61,6 +59,24 @@ class ByteArray {
   }
 
   /**
+   * Set new endianness
+   *
+   * @param {String} endian BE or LE
+   */
+  setEndian(endian) {
+    this.endian = endian;
+  }
+
+  /**
+   * Get endianness
+   *
+   * @return {String}
+   */
+  getEndian() {
+    return this.endian;
+  }
+
+  /**
    * Get size of internal buffer
    *
    * @return {Number}
@@ -92,61 +108,73 @@ class ByteArray {
     return value;
   }
 
-  readInt16() {
-    let value = this.buf.readInt16LE(this.offset);
+  readInt16(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readInt16LE(this.offset) :
+      this.buf.readInt16BE(this.offset);
     this.offset += 2;
 
     return value;
   }
 
-  readUInt16() {
-    let value = this.buf.readUInt16LE(this.offset);
+  readUInt16(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readUInt16LE(this.offset) :
+      this.buf.readUInt16BE(this.offset);
     this.offset += 2;
 
     return value;
   }
 
-  readInt32() {
-    let value = this.buf.readInt32LE(this.offset);
+  readInt32(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readInt32LE(this.offset) :
+      this.buf.readInt32BE(this.offset);
     this.offset += 4;
 
     return value;
   }
 
-  readUInt32() {
-    let value = this.buf.readUInt32LE(this.offset);
+  readUInt32(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readUInt32LE(this.offset) :
+      this.buf.readUInt32BE(this.offset);
     this.offset += 4;
 
     return value;
   }
 
-  readInt64() {
-    let int = new int64buffer.Int64LE(
-      this.buf.slice(this.offset, this.offset + 9)
-    );
+  readInt64(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readBigInt64LE(this.offset) :
+      this.buf.readBigInt64BE(this.offset);
     this.offset += 8;
 
-    return bigInteger(int.toString());
+    return value;
   }
 
-  readUInt64() {
-    let int = new int64buffer.Uint64LE(
-      this.buf.slice(this.offset, this.offset + 9)
-    );
+  readUInt64(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readBigUInt64LE(this.offset) :
+      this.buf.readBigUInt64BE(this.offset);
     this.offset += 8;
 
-    return bigInteger(int.toString());
+    return value;
   }
 
-  readFloat() {
-    let value = this.buf.readFloatLE(this.offset);
+  readFloat(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readFloatLE(this.offset) :
+      this.buf.readFloatBE(this.offset);
     this.offset += 4;
 
     return value;
   }
 
-  readDouble() {
-    let value = this.buf.readDoubleLE(this.offset);
+  readDouble(endian = this.endian) {
+    let value = endian == 'LE' ?
+      this.buf.readDoubleLE(this.offset) :
+      this.buf.readDoubleBE(this.offset);
     this.offset += 8;
 
     return value;
