@@ -1,3 +1,5 @@
+let {getFloat16} = require('@petamoriken/float16');
+
 /**
  * Wrapper for buffer reading
  *
@@ -158,6 +160,14 @@ class ByteArray {
       this.buf.readBigUInt64LE(this.offset) :
       this.buf.readBigUInt64BE(this.offset);
     this.offset += 8;
+
+    return value;
+  }
+
+  readHalf(endian = this.endian) {
+    let view = new DataView(this.buf.buffer);
+    let value = getFloat16(view, this.offset, endian == 'LE');
+    this.offset += 2;
 
     return value;
   }

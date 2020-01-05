@@ -5,5 +5,8 @@
   "main": "index.js",
   "author": "Alexander Golubev <lltwox@gmail.com>",
   "license": "ISC",
-  "repository": "git@github.com:lltwox/binary-tools.git"
+  "repository": "git@github.com:lltwox/binary-tools.git",
+  "dependencies": {
+    "@petamoriken/float16": "^1.1.1"
+  }
 }
